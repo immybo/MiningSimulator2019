@@ -1,4 +1,4 @@
-package com.example.miningsimulator2019;
+package com.rcampbell.miningsimulator2019.view;
 
 import android.annotation.SuppressLint;
 
@@ -11,6 +11,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.rcampbell.miningsimulator2019.R;
+import com.rcampbell.miningsimulator2019.model.MiningRobot;
+import com.rcampbell.miningsimulator2019.Universe;
 
 import java.util.Timer;
 import java.util.TimerTask;

@@ -1,8 +1,8 @@
-package com.example.miningsimulator2019;
+package com.rcampbell.miningsimulator2019.model;
 
 import android.graphics.Point;
 
-import java.util.Timer;
+import com.rcampbell.miningsimulator2019.Universe;
 
 public class MiningRobot {
     public enum Direction {

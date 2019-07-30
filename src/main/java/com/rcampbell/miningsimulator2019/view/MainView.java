@@ -1,4 +1,4 @@
-package com.example.miningsimulator2019;
+package com.rcampbell.miningsimulator2019.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,8 +7,10 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.view.SurfaceView;
 import android.view.View;
+
+import com.rcampbell.miningsimulator2019.model.tile.Tile;
+import com.rcampbell.miningsimulator2019.Universe;
 
 public class MainView extends View {
     private static final int X_SIZE = 11;

@@ -1,18 +1,21 @@
-package com.example.miningsimulator2019;
+package com.rcampbell.miningsimulator2019.model.tile;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-public class SilverTile extends Tile {
-    public SilverTile(int x, int y) {
+import com.rcampbell.miningsimulator2019.model.MiningRobot;
+import com.rcampbell.miningsimulator2019.TileActionHandler;
+
+public class DirtTile extends Tile {
+    public DirtTile(int x, int y) {
         super(x, y);
     }
 
     @Override
     public void draw(Rect bounds, Paint p, Canvas c) {
-        p.setColor(Color.rgb(180, 180, 180));
+        p.setColor(Color.rgb(87, 59, 12));
         p.setStyle(Paint.Style.FILL);
         c.drawRect(bounds, p);
 
@@ -24,14 +27,5 @@ public class SilverTile extends Tile {
     @Override
     public void onTouch(MiningRobot robot, TileActionHandler listener) {
         listener.transform(this, new EmptyTile(this.getX(), this.getY()));
-        listener.earnMoney(50);
-    }
-
-    public static double getProbability(int yCoordinate) {
-        if (yCoordinate < 5) {
-            return 0;
-        } else {
-            return 0.05;
-        }
     }
 }

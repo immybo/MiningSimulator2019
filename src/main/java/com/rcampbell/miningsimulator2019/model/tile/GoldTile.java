@@ -1,9 +1,12 @@
-package com.example.miningsimulator2019;
+package com.rcampbell.miningsimulator2019.model.tile;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+
+import com.rcampbell.miningsimulator2019.model.MiningRobot;
+import com.rcampbell.miningsimulator2019.TileActionHandler;
 
 public class GoldTile extends Tile {
     public GoldTile(int x, int y) {

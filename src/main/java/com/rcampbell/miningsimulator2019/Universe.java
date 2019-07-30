@@ -1,8 +1,10 @@
-package com.example.miningsimulator2019;
+package com.rcampbell.miningsimulator2019;
 
 import android.graphics.Point;
 
-import java.util.Random;
+import com.rcampbell.miningsimulator2019.model.MiningRobot;
+import com.rcampbell.miningsimulator2019.model.tile.EmptyTile;
+import com.rcampbell.miningsimulator2019.model.tile.Tile;
 
 public class Universe implements TileActionHandler {
     private MiningRobot robot;

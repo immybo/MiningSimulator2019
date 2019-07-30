@@ -1,4 +1,4 @@
-package com.example.miningsimulator2019;
+package com.rcampbell.miningsimulator2019.model.tile;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
