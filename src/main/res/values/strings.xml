@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Mining Simulator 2019</string>
+
+    <string name="up_button">^</string>
+    <string name="down_button">v</string>
+    <string name="left_button">&lt;</string>
+    <string name="right_button">&gt;</string>
+    <string name="no_money">$0.00</string>
+    <string name="upgrade_button">Upgrade ($100)</string>
+    <string name="refuel_button">Refuel ($0)</string>
+    <string name="starting_fuel">Fuel: 100%</string>
+</resources>
