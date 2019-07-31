@@ -13,8 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.rcampbell.miningsimulator2019.R;
+import com.rcampbell.miningsimulator2019.controller.MovementController;
 import com.rcampbell.miningsimulator2019.model.MiningRobot;
-import com.rcampbell.miningsimulator2019.Universe;
+import com.rcampbell.miningsimulator2019.model.Universe;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,7 +24,7 @@ import java.util.TimerTask;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class FullscreenActivity extends AppCompatActivity {
+public class FullscreenActivity extends AppCompatActivity implements ViewUpdateListener {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -93,9 +94,8 @@ public class FullscreenActivity extends AppCompatActivity {
         }
     };
 
-    private Timer robotMovementTimer;
-    private boolean buttonIsHeldDown;
-    private MiningRobot.Direction heldMovementDirection;
+    private MovementController movementController;
+    private Universe universe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,20 +107,10 @@ public class FullscreenActivity extends AppCompatActivity {
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.main_view);
 
-        final Universe universe = new Universe();
+        universe = new Universe();
         mContentView.setUniverse(universe);
 
-        robotMovementTimer = new Timer();
-        buttonIsHeldDown = false;
-/*
-        // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle();
-            }
-        });*/
-
+        movementController = new MovementController(this, universe.getRobot());
 
         findViewById(R.id.up_button).setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -185,46 +175,19 @@ public class FullscreenActivity extends AppCompatActivity {
     private boolean handleMove(final MiningRobot.Direction direction, final Universe universe, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                buttonIsHeldDown = true;
-                heldMovementDirection = direction;
-
-                if (!universe.getRobot().isMoving()) {
-                    startTimer(direction, universe);
-                }
-
+                movementController.handleMovementStart(direction);
                 return true;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                if (direction == heldMovementDirection) {
-                    buttonIsHeldDown = false;
-                }
+                movementController.handleMovementStop(direction);
                 return true;
             default:
                 return false;
         }
     }
 
-    private void startTimer(final MiningRobot.Direction direction, final Universe universe) {
-        if (!universe.isInBounds(universe.getRobot().getNewPosition(direction))) {
-            return;
-        }
-
-        universe.getRobot().setIsMoving(direction);
-
-        new Timer().schedule(new TimerTask() {
-            private MiningRobot.Direction thisIterationDirection = direction;
-
-            @Override
-            public void run() {
-                universe.getRobot().moveInDirection(thisIterationDirection);
-                thisIterationDirection = heldMovementDirection;
-                recalcHud(universe);
-
-                if (buttonIsHeldDown) {
-                    startTimer(heldMovementDirection, universe);
-                }
-            }
-        }, universe.getRobot().getMiningDelay());
+    public void refresh() {
+        recalcHud(universe);
     }
 
     private void recalcHud(Universe u) {

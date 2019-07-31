@@ -2,8 +2,6 @@ package com.rcampbell.miningsimulator2019.model;
 
 import android.graphics.Point;
 
-import com.rcampbell.miningsimulator2019.Universe;
-
 public class MiningRobot {
     public enum Direction {
         UP,
@@ -166,5 +164,9 @@ public class MiningRobot {
     public void upgrade() {
         currentUpgradeLevel += 1;
         maximumFuel *= 1.5;
+    }
+
+    public boolean canMove(Direction direction) {
+        return universe.isInBounds(getNewPosition(direction)) && currentFuel >= FUEL_PER_TILE;
     }
 }

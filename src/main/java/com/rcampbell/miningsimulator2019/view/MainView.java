@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.rcampbell.miningsimulator2019.model.tile.Tile;
-import com.rcampbell.miningsimulator2019.Universe;
+import com.rcampbell.miningsimulator2019.model.Universe;
 
 public class MainView extends View {
     private static final int X_SIZE = 11;

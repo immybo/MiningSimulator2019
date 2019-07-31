@@ -1,7 +1,8 @@
-package com.rcampbell.miningsimulator2019;
+package com.rcampbell.miningsimulator2019.model;
 
 import android.graphics.Point;
 
+import com.rcampbell.miningsimulator2019.TileActionHandler;
 import com.rcampbell.miningsimulator2019.model.MiningRobot;
 import com.rcampbell.miningsimulator2019.model.tile.EmptyTile;
 import com.rcampbell.miningsimulator2019.model.tile.Tile;
