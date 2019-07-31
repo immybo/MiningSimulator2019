@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.rcampbell.miningsimulator2019.R;
@@ -187,13 +188,18 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
     }
 
     public void refresh() {
-        recalcHud(universe);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                recalcHud(universe);
+            }
+        });
     }
 
     private void recalcHud(Universe u) {
         ((TextView)findViewById(R.id.money_label)).setText("$" + u.getPlayerMoney() + ".00");
         ((Button)findViewById(R.id.refuel_button)).setText("Refuel ($" + u.getRobot().getRefuelCost() + ")");
-        ((TextView)findViewById(R.id.fuel_label)).setText("Fuel: " + u.getRobot().getFuelPercentage() + "%");
+        ((ProgressBar)findViewById(R.id.fuel_guage)).setProgress(u.getRobot().getFuelPercentage());
     }
 
     @Override
