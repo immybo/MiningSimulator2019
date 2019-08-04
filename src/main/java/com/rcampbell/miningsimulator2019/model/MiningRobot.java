@@ -2,6 +2,11 @@ package com.rcampbell.miningsimulator2019.model;
 
 import android.graphics.Point;
 
+import com.rcampbell.miningsimulator2019.model.upgrade.Upgrade;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class MiningRobot {
     public enum Direction {
         UP,
@@ -27,6 +32,8 @@ public class MiningRobot {
     private int miningDelay;
     private final static int BASE_MINING_DELAY = 1000;
 
+    private Set<String> upgrades;
+
     public MiningRobot(Universe universe) {
         xPosition = 5;
         yPosition = 0;
@@ -37,6 +44,8 @@ public class MiningRobot {
         currentFuel = maximumFuel;
 
         miningDelay = BASE_MINING_DELAY;
+
+        upgrades = new HashSet<String>();
     }
 
     public int getXPosition() {
@@ -159,5 +168,13 @@ public class MiningRobot {
 
     public boolean canMove(Direction direction) {
         return universe.isInBounds(getNewPosition(direction)) && currentFuel >= FUEL_PER_TILE;
+    }
+
+    public boolean hasUpgrade(String upgradeName) {
+        return upgrades.contains(upgradeName);
+    }
+
+    public void addUpgrade(Upgrade upgrade) {
+        upgrades.add(upgrade.getName());
     }
 }

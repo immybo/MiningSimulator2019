@@ -144,7 +144,7 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
             }
         });
 
-        for (Upgrade upgrade : getAllUpgrades()) {
+        for (Upgrade upgrade : Upgrade.getAllUpgrades()) {
             addUpgradeButton((ViewGroup)findViewById(R.id.upgrade_view), upgrade);
         }
 
@@ -262,19 +262,13 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    public static Upgrade[] getAllUpgrades() {
-        return new Upgrade[] {
-                new MiningSpeedUpgrade(100, "Superior Drill", 500)
-        };
-    }
-
     private void addUpgradeButton(final ViewGroup view, final Upgrade upgrade) {
         final Button button = new Button(this);
         button.setText(upgrade.getName() + " ($" + upgrade.getCost() + ")");
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (universe.robotIsAboveGround() && universe.getPlayerMoney() >= upgrade.getCost()) {
+                if (universe.robotIsAboveGround() && universe.getPlayerMoney() >= upgrade.getCost() && upgrade.hasAllDependencies(universe.getRobot())) {
                     universe.spendMoney(upgrade.getCost());
                     upgrade.apply(universe.getRobot());
                     button.setVisibility(View.GONE);
