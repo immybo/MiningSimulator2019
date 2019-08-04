@@ -19,13 +19,13 @@ public class MiningRobot {
     private long movementStartTime;
     private long scheduledMovementEndTime;
 
-    private int currentUpgradeLevel;
-    private final static int UPGRADE_COST_MULTIPLIER = 100;
-
     private int currentFuel;
     private int maximumFuel;
     private final static int FUEL_PER_TILE = 1;
     private final static int COST_PER_FUEL = 5;
+
+    private int miningDelay;
+    private final static int BASE_MINING_DELAY = 1000;
 
     public MiningRobot(Universe universe) {
         xPosition = 5;
@@ -33,10 +33,10 @@ public class MiningRobot {
         isMoving = false;
         this.universe = universe;
 
-        currentUpgradeLevel = 1;
-
         maximumFuel = 100;
         currentFuel = maximumFuel;
+
+        miningDelay = BASE_MINING_DELAY;
     }
 
     public int getXPosition() {
@@ -150,20 +150,11 @@ public class MiningRobot {
     }
 
     public int getMiningDelay() {
-        return 1000 / currentUpgradeLevel;
+        return miningDelay;
     }
 
-    public int getCurrentUpgradeLevel() {
-        return currentUpgradeLevel;
-    }
-
-    public int getCostToUpgrade() {
-        return getCurrentUpgradeLevel() * UPGRADE_COST_MULTIPLIER;
-    }
-
-    public void upgrade() {
-        currentUpgradeLevel += 1;
-        maximumFuel *= 1.5;
+    public void setMiningDelay(int miningDelay) {
+        this.miningDelay = miningDelay;
     }
 
     public boolean canMove(Direction direction) {

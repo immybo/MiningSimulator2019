@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,6 +18,8 @@ import com.rcampbell.miningsimulator2019.R;
 import com.rcampbell.miningsimulator2019.controller.MovementController;
 import com.rcampbell.miningsimulator2019.model.MiningRobot;
 import com.rcampbell.miningsimulator2019.model.Universe;
+import com.rcampbell.miningsimulator2019.model.upgrade.MiningSpeedUpgrade;
+import com.rcampbell.miningsimulator2019.model.upgrade.Upgrade;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -141,17 +144,9 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
             }
         });
 
-        findViewById(R.id.upgrade_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (universe.robotIsAboveGround() && universe.getPlayerMoney() >= universe.getRobot().getCostToUpgrade()) {
-                    universe.spendMoney(universe.getRobot().getCostToUpgrade());
-                    universe.getRobot().upgrade();
-                    ((Button)findViewById(R.id.upgrade_button)).setText("Upgrade ($" + universe.getRobot().getCostToUpgrade() + ")");
-                    recalcHud(universe);
-                }
-            }
-        });
+        for (Upgrade upgrade : getAllUpgrades()) {
+            addUpgradeButton((ViewGroup)findViewById(R.id.upgrade_view), upgrade);
+        }
 
         findViewById(R.id.refuel_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,14 +226,6 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
         delayedHide(100);
     }
 
-    private void toggle() {
-        if (mVisible) {
-            hide();
-        } else {
-            show();
-        }
-    }
-
     private void hide() {
         // Hide UI first
         ActionBar actionBar = getSupportActionBar();
@@ -273,5 +260,28 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    public static Upgrade[] getAllUpgrades() {
+        return new Upgrade[] {
+                new MiningSpeedUpgrade(100, "Superior Drill", 500)
+        };
+    }
+
+    private void addUpgradeButton(final ViewGroup view, final Upgrade upgrade) {
+        final Button button = new Button(this);
+        button.setText(upgrade.getName() + " ($" + upgrade.getCost() + ")");
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (universe.robotIsAboveGround() && universe.getPlayerMoney() >= upgrade.getCost()) {
+                    universe.spendMoney(upgrade.getCost());
+                    upgrade.apply(universe.getRobot());
+                    button.setVisibility(View.GONE);
+                    refresh();
+                }
+            }
+        });
+        view.addView(button);
     }
 }
