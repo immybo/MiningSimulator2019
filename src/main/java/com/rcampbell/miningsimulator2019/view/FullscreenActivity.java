@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -116,6 +117,8 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
 
         movementController = new MovementController(this, universe.getRobot());
 
+        ((UpgradeView)findViewById(R.id.upgrade_view)).initialise(universe, this);
+
         findViewById(R.id.up_button).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
@@ -143,10 +146,6 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
                 return handleMove(MiningRobot.Direction.RIGHT, universe, event);
             }
         });
-
-        for (Upgrade upgrade : Upgrade.getAllUpgrades()) {
-            addUpgradeButton((ViewGroup)findViewById(R.id.upgrade_view), upgrade);
-        }
 
         findViewById(R.id.refuel_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,22 +259,5 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
-    }
-
-    private void addUpgradeButton(final ViewGroup view, final Upgrade upgrade) {
-        final Button button = new Button(this);
-        button.setText(upgrade.getName() + " ($" + upgrade.getCost() + ")");
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (universe.robotIsAboveGround() && universe.getPlayerMoney() >= upgrade.getCost() && upgrade.hasAllDependencies(universe.getRobot())) {
-                    universe.spendMoney(upgrade.getCost());
-                    upgrade.apply(universe.getRobot());
-                    button.setVisibility(View.GONE);
-                    refresh();
-                }
-            }
-        });
-        view.addView(button);
     }
 }

@@ -5,8 +5,8 @@ import com.rcampbell.miningsimulator2019.model.MiningRobot;
 public class MiningSpeedUpgrade extends Upgrade {
     private final int newMiningDelay;
 
-    public MiningSpeedUpgrade(int cost, String name, String[] dependencies, int newMiningDelay) {
-        super(cost, name, dependencies);
+    public MiningSpeedUpgrade(int cost, String name, String[] dependencies, int icon, int newMiningDelay) {
+        super(cost, name, dependencies, icon);
         this.newMiningDelay = newMiningDelay;
     }
 

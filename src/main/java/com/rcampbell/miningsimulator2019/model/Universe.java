@@ -26,7 +26,7 @@ public class Universe implements TileActionHandler {
             }
         }
 
-        playerMoney = 0;
+        playerMoney = 1000; //0;
     }
 
     public MiningRobot getRobot() {

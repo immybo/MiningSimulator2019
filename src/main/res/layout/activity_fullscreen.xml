@@ -16,7 +16,7 @@
         android:textSize="50sp"
         android:textStyle="bold" />
 
-    <LinearLayout
+    <com.rcampbell.miningsimulator2019.view.UpgradeView
         android:id="@+id/upgrade_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,7 +25,7 @@
         tools:ignore="UselessParent"
         android:visibility="invisible"
         android:background="@color/black_overlay">
-    </LinearLayout>
+    </com.rcampbell.miningsimulator2019.view.UpgradeView>
 
     <FrameLayout
         android:layout_width="match_parent"
