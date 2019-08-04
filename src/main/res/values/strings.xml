@@ -9,4 +9,6 @@
     <string name="upgrade_button">Upgrade ($100)</string>
     <string name="refuel_button">Refuel ($0)</string>
     <string name="starting_fuel">Fuel: 100%</string>
+    <string name="upgrades">Upgrades</string>
+    <string name="back_to_main">Back</string>
 </resources>

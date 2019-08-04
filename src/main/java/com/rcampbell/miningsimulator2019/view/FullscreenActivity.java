@@ -165,6 +165,25 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
             }
         });
 
+        findViewById(R.id.upgrade_view_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View mainView = findViewById(R.id.main_view);
+                View upgradeView = findViewById(R.id.upgrade_view);
+                Button upgradeViewButton = (Button)findViewById(R.id.upgrade_view_button);
+
+                if (mainView.getVisibility() == View.VISIBLE) {
+                    mainView.setVisibility(View.INVISIBLE);
+                    upgradeView.setVisibility(View.VISIBLE);
+                    upgradeViewButton.setText(R.string.back_to_main);
+                } else {
+                    mainView.setVisibility(View.VISIBLE);
+                    upgradeView.setVisibility(View.INVISIBLE);
+                    upgradeViewButton.setText(R.string.upgrades);
+                }
+            }
+        });
+
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -237,6 +256,8 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
     private void show() {
         // Show the system bar
         mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        findViewById(R.id.upgrade_view).setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         mVisible = true;
 

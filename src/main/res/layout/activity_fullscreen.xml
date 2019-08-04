@@ -6,9 +6,6 @@
     android:background="#0099cc"
     tools:context=".view.FullscreenActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
     <com.rcampbell.miningsimulator2019.view.MainView
         android:id="@+id/main_view"
         android:layout_width="match_parent"
@@ -19,8 +16,25 @@
         android:textSize="50sp"
         android:textStyle="bold" />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
+    <LinearLayout
+        android:id="@+id/upgrade_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|center_horizontal"
+        android:orientation="vertical"
+        tools:ignore="UselessParent"
+        android:visibility="invisible"
+        android:background="@color/black_overlay">
+
+        <Button
+            android:id="@+id/upgrade_button"
+            style="?metaButtonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/upgrade_button" />
+    </LinearLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -111,12 +125,12 @@
                     android:textSize="16sp" />
 
                 <Button
-                    android:id="@+id/upgrade_button"
+                    android:id="@+id/upgrade_view_button"
                     style="?metaButtonBarButtonStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/upgrade_button" />
+                    android:text="@string/upgrades" />
 
 
                 <LinearLayout
