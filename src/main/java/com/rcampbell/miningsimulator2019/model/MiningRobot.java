@@ -26,7 +26,9 @@ public class MiningRobot {
 
     private int currentFuel;
     private int maximumFuel;
-    private final static int FUEL_PER_TILE = 1;
+    private double fuelPerTile;
+
+    private final static int INITIAL_FUEL_PER_TILE = 1;
     private final static int COST_PER_FUEL = 5;
 
     private int miningDelay;
@@ -46,6 +48,8 @@ public class MiningRobot {
         miningDelay = BASE_MINING_DELAY;
 
         upgrades = new HashSet<String>();
+
+        fuelPerTile = INITIAL_FUEL_PER_TILE;
     }
 
     public int getXPosition() {
@@ -58,10 +62,10 @@ public class MiningRobot {
 
     public void moveInDirection(Direction d) {
         Point newPosition = getNewPosition(d);
-        if (universe.isInBounds(newPosition) && currentFuel >= FUEL_PER_TILE) {
+        if (universe.isInBounds(newPosition) && currentFuel >= fuelPerTile) {
             this.moveTo(newPosition);
             universe.getTiles()[yPosition][xPosition].onTouch(this, universe);
-            currentFuel -= FUEL_PER_TILE;
+            currentFuel -= fuelPerTile;
         }
         stopMoving();
     }
@@ -167,7 +171,7 @@ public class MiningRobot {
     }
 
     public boolean canMove(Direction direction) {
-        return universe.isInBounds(getNewPosition(direction)) && currentFuel >= FUEL_PER_TILE;
+        return universe.isInBounds(getNewPosition(direction)) && currentFuel >= fuelPerTile;
     }
 
     public boolean hasUpgrade(String upgradeName) {
@@ -176,5 +180,16 @@ public class MiningRobot {
 
     public void addUpgrade(Upgrade upgrade) {
         upgrades.add(upgrade.getName());
+    }
+
+    public void setMaximumFuel(int newMaximumFuel) {
+        this.maximumFuel = newMaximumFuel;
+        if (this.currentFuel > this.maximumFuel) {
+            this.currentFuel = this.maximumFuel;
+        }
+    }
+
+    public void setFuelPerTile(double newFuelPerTile) {
+        this.fuelPerTile = newFuelPerTile;
     }
 }

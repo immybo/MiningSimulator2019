@@ -3,12 +3,13 @@ package com.rcampbell.miningsimulator2019.model.upgrade;
 import com.rcampbell.miningsimulator2019.R;
 import com.rcampbell.miningsimulator2019.model.MiningRobot;
 
-import java.util.List;
-
 public abstract class Upgrade {
     private static Upgrade[] allUpgrades = new Upgrade[] {
-            new MiningSpeedUpgrade(100, "Superior Drill", new String[0], R.mipmap.superior_drill, 500),
-            new MiningSpeedUpgrade(500, "Adamantium Drill", new String[]{"Superior Drill"}, R.mipmap.superior_drill, 200)
+            new MiningSpeedUpgrade(100, "Superior Drill", new String[0], R.mipmap.default_image, 500),
+            new MiningSpeedUpgrade(500, "Adamantium Drill", new String[]{"Superior Drill"}, R.mipmap.default_image, 200),
+            new FuelAmountUpgrade(100, "Large Fuel Tank", new String[0], R.mipmap.default_image, 200),
+            new FuelAmountUpgrade(1000, "Huge Fuel Tank", new String[]{"Large Fuel Tank"}, R.mipmap.default_image, 500),
+            new FuelEfficiencyUpgrade(500, "Fuel Recycling", new String[0], R.mipmap.default_image, 0.5)
     };
 
     private final int cost;
