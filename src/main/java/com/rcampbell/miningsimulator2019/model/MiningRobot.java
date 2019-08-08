@@ -2,6 +2,7 @@ package com.rcampbell.miningsimulator2019.model;
 
 import android.graphics.Point;
 
+import com.rcampbell.miningsimulator2019.model.tile.Tile;
 import com.rcampbell.miningsimulator2019.model.upgrade.Upgrade;
 
 import java.util.HashSet;
@@ -62,9 +63,9 @@ public class MiningRobot {
 
     public void moveInDirection(Direction d) {
         Point newPosition = getNewPosition(d);
-        if (universe.isInBounds(newPosition) && currentFuel >= fuelPerTile) {
+        if (canMove(d)) {
             this.moveTo(newPosition);
-            universe.getTiles()[yPosition][xPosition].onTouch(this, universe);
+            universe.getTile(newPosition).onTouch(this, universe);
             currentFuel -= fuelPerTile;
         }
         stopMoving();
@@ -171,7 +172,10 @@ public class MiningRobot {
     }
 
     public boolean canMove(Direction direction) {
-        return universe.isInBounds(getNewPosition(direction)) && currentFuel >= fuelPerTile;
+        Point newPosition = getNewPosition(direction);
+        return universe.isInBounds(newPosition)
+                && currentFuel >= fuelPerTile
+                && !universe.getTile(newPosition).collides(this);
     }
 
     public boolean hasUpgrade(String upgradeName) {
@@ -191,5 +195,9 @@ public class MiningRobot {
 
     public void setFuelPerTile(double newFuelPerTile) {
         this.fuelPerTile = newFuelPerTile;
+    }
+
+    public void explode() {
+        // TODO
     }
 }

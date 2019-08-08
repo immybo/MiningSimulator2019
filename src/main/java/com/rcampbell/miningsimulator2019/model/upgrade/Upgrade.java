@@ -4,6 +4,7 @@ import com.rcampbell.miningsimulator2019.R;
 import com.rcampbell.miningsimulator2019.model.MiningRobot;
 
 public abstract class Upgrade {
+    // TODO enforce checking of names at compile time when these are referenced
     private static Upgrade[] allUpgrades = new Upgrade[] {
             new MiningSpeedUpgrade(100, "Superior Drill", new String[0], R.mipmap.default_image, 500),
             new MiningSpeedUpgrade(500, "Adamantium Drill", new String[]{"Superior Drill"}, R.mipmap.default_image, 200),

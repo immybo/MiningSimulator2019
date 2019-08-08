@@ -24,6 +24,10 @@ public abstract class Tile {
         // Default to doing nothing
     }
 
+    public boolean collides(MiningRobot robot) {
+        return false;
+    }
+
     public int getX() {
         return x;
     }
@@ -40,6 +44,10 @@ public abstract class Tile {
             return new GoldTile(x, y);
         } else if (r.nextDouble() < SilverTile.getProbability(y)) {
             return new SilverTile(x, y);
+        } else if (r.nextDouble() < MagmaTile.getProbability(y)) {
+            return new MagmaTile(x, y);
+        } else if (r.nextDouble() < RockTile.getProbability(y)) {
+            return new RockTile(x, y);
         } else {
             return new DirtTile(x, y);
         }

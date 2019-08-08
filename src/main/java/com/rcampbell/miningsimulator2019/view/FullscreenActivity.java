@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -112,7 +113,7 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.main_view);
 
-        universe = new Universe();
+        universe = new Universe(this);
         mContentView.setUniverse(universe);
 
         movementController = new MovementController(this, universe.getRobot());
@@ -259,5 +260,13 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    @Override
+    public void loseGame() {
+        universe.getRobot().explode();
+
+        Intent switchToMenu = new Intent(this, MenuActivity.class);
+        startActivity(switchToMenu);
     }
 }

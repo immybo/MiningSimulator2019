@@ -11,4 +11,6 @@
     <string name="starting_fuel">Fuel: 100%</string>
     <string name="upgrades">Upgrades</string>
     <string name="back_to_main">Back</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="start_game_button">Start Game</string>
 </resources>
