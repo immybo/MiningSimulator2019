@@ -16,6 +16,7 @@ public class MainView extends View {
     private static final int X_SIZE = 11;
     private static final int Y_SIZE = 19;
     private static final int ROBOT_OFFSET = 8;
+    private static final int ROBOT_X_OFFSET = X_SIZE / 2;
 
     private Universe universe;
 
@@ -47,26 +48,32 @@ public class MainView extends View {
         p.setStyle(Paint.Style.FILL);
         canvas.drawRect(0, 0, this.getWidth(), this.getHeight(), p);
 
-        int minY = (int)(universe.getRobot().getYPosition() - ROBOT_OFFSET - 2);
+        int minY = (int)(universe.getRobot().getYPosition() - ROBOT_OFFSET  - 1);
+        int maxY = minY + Y_SIZE + 2;
 
-        Tile[][] tiles = universe.getTiles();
-        for (int x = 0; x < tiles[0].length; x++) {
-            for (int y = minY; y < minY + Y_SIZE + 4; y++) {
-                if (universe.isInBounds(new Point(x, y))) {
-                    tiles[y][x].draw(getSquareBounds(canvas, universe.getRobot().getYPositionIncludingMovement() - ROBOT_OFFSET, x, y), p, canvas);
-                }
+        int minX = (int)(universe.getRobot().getXPosition() - ROBOT_X_OFFSET - 1);
+        int maxX = minX + X_SIZE + 2;
+
+        if (minY < 0) {
+            minY = 0;
+        }
+
+        for (int x = minX; x < maxX; x++) {
+            for (int y = minY; y < maxY; y++) {
+                universe.getTile(new Point(x, y)).draw(getSquareBounds(canvas, universe.getRobot().getXPositionIncludingMovement() - ROBOT_X_OFFSET, universe.getRobot().getYPositionIncludingMovement() - ROBOT_OFFSET, x, y), p, canvas);
             }
         }
 
         p.setColor(Color.RED);
         p.setStyle(Paint.Style.FILL);
-        canvas.drawRect(getSquareBounds(canvas, 0, universe.getRobot().getXPositionIncludingMovement(), ROBOT_OFFSET), p);
+        canvas.drawRect(getSquareBounds(canvas,  0, 0, X_SIZE/2, ROBOT_OFFSET), p);
     }
 
-    public Rect getSquareBounds(Canvas canvas, double robotY, double x, double y) {
+    public Rect getSquareBounds(Canvas canvas, double robotX, double robotY, double x, double y) {
         double squareWidth = canvas.getWidth() / X_SIZE;
         double squareHeight = canvas.getHeight() / Y_SIZE;
         double yOffset = squareHeight * robotY;
-        return new Rect((int)(x*squareWidth), (int)(y*squareHeight - yOffset), (int)(x*squareWidth + squareWidth), (int)(y*squareHeight + squareHeight - yOffset));
+        double xOffset = squareWidth * robotX;
+        return new Rect((int)(x*squareWidth - xOffset), (int)(y*squareHeight - yOffset), (int)(x*squareWidth + squareWidth - xOffset), (int)(y*squareHeight + squareHeight - yOffset));
     }
 }

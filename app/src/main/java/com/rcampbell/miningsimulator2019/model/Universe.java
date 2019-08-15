@@ -10,39 +10,27 @@ import com.rcampbell.miningsimulator2019.view.ViewUpdateListener;
 
 public class Universe implements TileActionHandler {
     private MiningRobot robot;
-    private Tile[][] tiles;
     private int playerMoney;
 
     private final ViewUpdateListener viewListener;
 
+    private Map map;
+
     public Universe(ViewUpdateListener viewListener) {
         robot = new MiningRobot(this);
-        tiles = new Tile[500][11];
-
-        for (int x = 0; x < tiles[0].length; x++) {
-            for (int y = 0; y < tiles.length; y++) {
-                if (y == 0) {
-                    tiles[y][x] = new EmptyTile(x, y);
-                } else {
-                    tiles[y][x] = Tile.getRandomTile(x, y);
-                }
-            }
-        }
 
         playerMoney = 1000; //0;
         this.viewListener = viewListener;
+
+        this.map = new Map();
     }
 
     public Tile getTile(Point position) {
-        return tiles[position.y][position.x];
+        return map.getTile(position);
     }
 
     public MiningRobot getRobot() {
         return robot;
-    }
-
-    public Tile[][] getTiles() {
-        return tiles;
     }
 
     public int getPlayerMoney() {
@@ -63,7 +51,7 @@ public class Universe implements TileActionHandler {
         assert oldTile.getX() == newTile.getX();
         assert oldTile.getY() == newTile.getY();
 
-        tiles[oldTile.getY()][oldTile.getX()] = newTile;
+        map.transform(oldTile, newTile);
     }
 
     @Override
@@ -72,7 +60,7 @@ public class Universe implements TileActionHandler {
     }
 
     public boolean isInBounds(Point p) {
-        return !(p.x < 0 || p.y < 0 || p.x >= tiles[0].length || p.y >= tiles.length);
+        return map.isInBounds(p);
     }
 
     @Override
