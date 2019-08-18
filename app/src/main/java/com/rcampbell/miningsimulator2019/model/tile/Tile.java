@@ -37,6 +37,10 @@ public abstract class Tile {
     }
 
     public static Tile getRandomTile(int x, int y) {
+        if (y == 0) {
+            return new EmptyTile(x, y);
+        }
+
         Random r = new Random();
         if (r.nextDouble() < SapphireTile.getProbability(y)) {
             return new SapphireTile(x, y);
