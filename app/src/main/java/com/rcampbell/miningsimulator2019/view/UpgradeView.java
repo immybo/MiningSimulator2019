@@ -6,13 +6,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.rcampbell.miningsimulator2019.R;
 import com.rcampbell.miningsimulator2019.model.Universe;
 import com.rcampbell.miningsimulator2019.model.upgrade.Upgrade;
 
@@ -47,8 +43,8 @@ public class UpgradeView extends LinearLayout {
 
         for (Upgrade upgrade : upgrades) {
             ImageButton upgradeButton = imagesByUpgradeName.get(upgrade.getName());
-            for (String dependency : upgrade.getDependencies()) {
-                ImageButton dependencyButton = imagesByUpgradeName.get(dependency);
+            for (Upgrade dependency : upgrade.getDependencies()) {
+                ImageButton dependencyButton = imagesByUpgradeName.get(dependency.getName());
                 canvas.drawLine(upgradeButton.getX()+upgradeButton.getWidth()/2, upgradeButton.getY()+upgradeButton.getHeight()/2, dependencyButton.getX()+dependencyButton.getWidth()/2, dependencyButton.getY()+dependencyButton.getHeight()/2, paint);
             }
         }
@@ -57,7 +53,7 @@ public class UpgradeView extends LinearLayout {
     public void initialise(Universe universe, ViewUpdateListener listener) {
         imagesByUpgradeName = new HashMap<String, ImageButton>();
 
-        Upgrade[] upgrades = Upgrade.getAllUpgrades();
+        Upgrade[] upgrades = Upgrade.getAll();
 
         for (Upgrade upgrade : upgrades) {
             ImageButton button = getUpgradeButton(upgrade, universe, listener);

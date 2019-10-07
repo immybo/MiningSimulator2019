@@ -178,8 +178,8 @@ public class MiningRobot {
                 && !universe.getTile(newPosition).collides(this);
     }
 
-    public boolean hasUpgrade(String upgradeName) {
-        return upgrades.contains(upgradeName);
+    public boolean hasUpgrade(Upgrade upgrade) {
+        return upgrades.contains(upgrade.getName());
     }
 
     public void addUpgrade(Upgrade upgrade) {

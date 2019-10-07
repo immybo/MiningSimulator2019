@@ -7,6 +7,7 @@ import android.graphics.Rect;
 
 import com.rcampbell.miningsimulator2019.TileActionHandler;
 import com.rcampbell.miningsimulator2019.model.MiningRobot;
+import com.rcampbell.miningsimulator2019.model.upgrade.Upgrade;
 
 public class RockTile extends Tile {
     public RockTile(int x, int y) {
@@ -26,7 +27,7 @@ public class RockTile extends Tile {
 
     @Override
     public boolean collides(MiningRobot robot) {
-        return !robot.hasUpgrade("Adamantium Drill");
+        return !robot.hasUpgrade(Upgrade.MiningSpeed2);
     }
 
     @Override

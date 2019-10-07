@@ -5,7 +5,7 @@ import com.rcampbell.miningsimulator2019.model.MiningRobot;
 public class FuelEfficiencyUpgrade extends Upgrade {
     private final double newFuelPerTile;
 
-    public FuelEfficiencyUpgrade(int cost, String name, String[] dependencies, int icon, double newFuelPerTile) {
+    public FuelEfficiencyUpgrade(int cost, String name, Upgrade[] dependencies, int icon, double newFuelPerTile) {
         super(cost, name, dependencies, icon);
 
         this.newFuelPerTile = newFuelPerTile;
