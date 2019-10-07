@@ -15,7 +15,6 @@ import android.widget.Button;
 import com.rcampbell.miningsimulator2019.R;
 
 public class MenuActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,5 +31,4 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
     }
-
 }
