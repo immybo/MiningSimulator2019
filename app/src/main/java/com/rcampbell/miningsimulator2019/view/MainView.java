@@ -20,6 +20,8 @@ public class MainView extends View {
 
     private Universe universe;
 
+    private MiningRobotAnimator miningRobotAnimator;
+
     public MainView(Context context) {
         super(context);
     }
@@ -34,6 +36,7 @@ public class MainView extends View {
 
     public void setUniverse(Universe universe) {
         this.universe = universe;
+        this.miningRobotAnimator = new MiningRobotAnimator(universe.getRobot());
     }
 
     @Override
@@ -64,9 +67,7 @@ public class MainView extends View {
             }
         }
 
-        p.setColor(Color.RED);
-        p.setStyle(Paint.Style.FILL);
-        canvas.drawRect(getSquareBounds(canvas,  0, 0, X_SIZE/2, ROBOT_OFFSET), p);
+        miningRobotAnimator.draw(getSquareBounds(canvas,  0, 0, X_SIZE/2, ROBOT_OFFSET), p, canvas);
     }
 
     public Rect getSquareBounds(Canvas canvas, double robotX, double robotY, double x, double y) {

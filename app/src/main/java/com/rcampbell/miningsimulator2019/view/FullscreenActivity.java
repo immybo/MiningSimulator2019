@@ -158,7 +158,11 @@ public class FullscreenActivity extends AppCompatActivity implements ViewUpdateL
     public void loseGame() {
         universe.getRobot().explode();
 
-        Intent switchToMenu = new Intent(this, MenuActivity.class);
-        startActivity(switchToMenu);
+        new Timer().schedule(new TimerTask() {
+            public void run() {
+                Intent switchToMenu = new Intent(FullscreenActivity.this, MenuActivity.class);
+                startActivity(switchToMenu);
+            }
+        }, 3000);
     }
 }

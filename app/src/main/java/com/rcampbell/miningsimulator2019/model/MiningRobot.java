@@ -37,6 +37,8 @@ public class MiningRobot {
 
     private Set<String> upgrades;
 
+    private boolean hasExploded = false;
+
     public MiningRobot(Universe universe) {
         xPosition = 5;
         yPosition = 0;
@@ -175,7 +177,8 @@ public class MiningRobot {
         Point newPosition = getNewPosition(direction);
         return universe.isInBounds(newPosition)
                 && currentFuel >= fuelPerTile
-                && !universe.getTile(newPosition).collides(this);
+                && !universe.getTile(newPosition).collides(this)
+                && !this.hasExploded();
     }
 
     public boolean hasUpgrade(Upgrade upgrade) {
@@ -198,6 +201,10 @@ public class MiningRobot {
     }
 
     public void explode() {
-        // TODO
+        hasExploded = true;
+    }
+
+    public boolean hasExploded() {
+        return hasExploded;
     }
 }
